@@ -1,0 +1,57 @@
+<mujoco>
+  <!-- green robot arm: pedestal, yaw, shoulder/elbow/wrist pitch, 2-finger gripper -->
+  <worldbody>
+    <body name="green_base" pos="-0.460 0.460 0" euler="0 0 -45.0">
+      <geom contype="2" conaffinity="1" type="cylinder" size=".07 .02" pos="0 0 .02" rgba=".25 .25 .28 1"/>
+      <geom contype="2" conaffinity="1" type="cylinder" size=".045 .065" pos="0 0 .105" rgba=".10 .65 .22 1"/>
+      <body name="green_turret" pos="0 0 .17" gravcomp="1">
+        <joint name="green_yaw" type="hinge" axis="0 0 1" range="-100 100" damping="2" armature=".01"/>
+        <geom contype="2" conaffinity="1" type="sphere" size=".05" rgba=".25 .25 .28 1"/>
+        <body name="green_upper" pos="0 0 .03" gravcomp="1">
+          <joint name="green_shoulder" type="hinge" axis="0 1 0" range="-30 100" damping="2" armature=".01"/>
+          <geom contype="2" conaffinity="1" type="capsule" fromto="0 0 0 0 0 0.55" size=".032" rgba=".10 .65 .22 1"/>
+          <body name="green_fore" pos="0 0 0.55" gravcomp="1">
+            <joint name="green_elbow" type="hinge" axis="0 1 0" range="0 165" damping="1" armature=".005"/>
+            <geom contype="2" conaffinity="1" type="sphere" size=".035" rgba=".25 .25 .28 1"/>
+            <geom contype="2" conaffinity="1" type="capsule" fromto="0 0 0 0 0 0.55" size=".026" rgba=".10 .65 .22 1"/>
+            <body name="green_wrist" pos="0 0 0.55" gravcomp="1">
+              <joint name="green_wrist" type="hinge" axis="0 1 0" range="-90 120" damping=".5" armature=".002"/>
+              <geom contype="2" conaffinity="1" type="sphere" size=".027" rgba=".25 .25 .28 1"/>
+              <geom contype="2" conaffinity="1" type="box" size=".04 .008 .015" pos="0 0 .02" rgba=".25 .25 .28 1"/>
+              <body name="green_finger_l" pos="0 .03 .035" gravcomp="1">
+                <joint name="green_finger_l" type="slide" axis="0 -1 0" range="0 .025" damping="5"/>
+                <geom contype="2" conaffinity="1" type="box" size=".008 .005 .03" pos="0 0 .03" rgba=".10 .65 .22 1"/>
+              </body>
+              <body name="green_finger_r" pos="0 -.03 .035" gravcomp="1">
+                <joint name="green_finger_r" type="slide" axis="0 1 0" range="0 .025" damping="5"/>
+                <geom contype="2" conaffinity="1" type="box" size=".008 .005 .03" pos="0 0 .03" rgba=".10 .65 .22 1"/>
+              </body>
+              <camera name="green_hand_cam" pos="0 0 .036" xyaxes="0 1 0 1 0 0" fovy="90" resolution="320 240"/>
+            </body>
+          </body>
+        </body>
+      </body>
+      <geom contype="2" conaffinity="1" type="capsule" fromto="0 -.10 .04 0 -.10 .29" size=".011" rgba=".25 .25 .28 1"/>
+      <body name="green_head" pos="0 -.10 .30" gravcomp="1">
+        <joint name="green_head_pan" type="hinge" axis="0 0 1" range="-120 120" damping=".05" armature=".002"/>
+        <geom contype="2" conaffinity="1" type="sphere" size=".016" rgba=".25 .25 .28 1"/>
+        <body name="green_neck" pos="0 0 .02" gravcomp="1">
+          <joint name="green_head_tilt" type="hinge" axis="0 1 0" range="-20 80" damping=".05" armature=".002"/>
+          <geom contype="2" conaffinity="1" type="box" size=".028 .035 .024" pos=".005 0 0" rgba=".10 .65 .22 1"/>
+          <geom contype="2" conaffinity="1" type="cylinder" fromto=".033 0 0 .046 0 0" size=".014" rgba=".05 .05 .08 1"/>
+          <camera name="green_head_cam" pos=".047 0 0" xyaxes="0 -1 0 0 0 1" fovy="70" resolution="640 480"/>
+        </body>
+      </body>
+    </body>
+  </worldbody>
+  <actuator>
+    <position name="green_a_yaw" joint="green_yaw" kp="400" kv="60" ctrlrange="-1.75 1.75"/>
+    <position name="green_a_shoulder" joint="green_shoulder" kp="900" kv="120" ctrlrange="-.5 1.75"/>
+    <position name="green_a_elbow" joint="green_elbow" kp="600" kv="80" ctrlrange="0 2.88"/>
+    <position name="green_a_wrist" joint="green_wrist" kp="60" kv="6" ctrlrange="-1.5 2.1"/>
+    <position name="green_a_grip_l" joint="green_finger_l" kp="200" kv="10" ctrlrange="0 .025"/>
+    <position name="green_a_grip_r" joint="green_finger_r" kp="200" kv="10" ctrlrange="0 .025"/>
+    <position name="green_a_head_pan" joint="green_head_pan" kp="2" kv=".2" ctrlrange="-2.1 2.1"/>
+    <position name="green_a_head_tilt" joint="green_head_tilt" kp="2" kv=".2" ctrlrange="-.35 1.4"/>
+  </actuator>
+</mujoco>

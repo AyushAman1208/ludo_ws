@@ -1,0 +1,29 @@
+<mujoco model="ludo">
+  <!-- Top-level scene: load THIS file.  board.xml and robots/robot_*.xml are included. -->
+  <compiler angle="degree" autolimits="true"/>
+  <option timestep="0.002" integrator="implicitfast"/>
+  <visual>
+    <headlight diffuse=".5 .5 .5" ambient=".3 .3 .3"/>
+    <global azimuth="45" elevation="-38"/>
+  </visual>
+  <asset>
+    <texture name="grid" type="2d" builtin="checker" rgb1=".30 .33 .38" rgb2=".26 .29 .34" width="256" height="256"/>
+    <material name="floor" texture="grid" texrepeat="8 8" reflectance=".1"/>
+  </asset>
+  <worldbody>
+    <light name="key" pos="0 0 2.2" dir="0 0 -1" diffuse=".4 .4 .4" castshadow="true"/>
+    <geom name="floor" type="plane" size="1.4 1.4 .05" material="floor"/>
+    <camera name="overview" mode="targetbody" target="board" pos="1.5 -1.5 1.4"/>
+    <camera name="top" pos="0 0 1.6" xyaxes="1 0 0 0 1 0"/>
+  </worldbody>
+
+  <include file="board.xml"/>
+  <include file="robots/robot_red.xml"/>
+  <include file="robots/robot_green.xml"/>
+  <include file="robots/robot_yellow.xml"/>
+  <include file="robots/robot_blue.xml"/>
+
+  <keyframe>
+    <key name="home" qpos="-0.2250 -0.2250 0.0545 0.92388 0 0 0.38268 -0.2250 0.2250 0.0545 0.92388 0 0 -0.38268 0.2250 0.2250 0.0545 0.38268 0 0 -0.92388 0.2250 -0.2250 0.0545 0.38268 0 0 0.92388 0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000 -0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000 -0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000 0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000" ctrl="0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000 -0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000 -0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000 0.000000 0.119790 2.515724 0.506079 0.000000 0.000000 0.000000 0.600000"/>
+  </keyframe>
+</mujoco>
