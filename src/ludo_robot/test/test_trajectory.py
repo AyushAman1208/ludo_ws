@@ -22,7 +22,7 @@ def run_perfect_plant(geo, steps, grasp_width=0.005):
 
 
 def test_pick_and_place_visits_source_and_target():
-    geo = K.ArmGeometry.for_color("yellow")
+    geo = K.ArmGeometry.create_for_color("yellow")
     src, dst = geo.yard_center, (-0.30, -0.05)
     steps = T.pick_and_place_steps(src, dst)
     assert T.validate_steps(geo, steps, geo.home_q()) is None
@@ -36,13 +36,13 @@ def test_pick_and_place_visits_source_and_target():
 
 
 def test_missed_grasp_is_detected():
-    geo = K.ArmGeometry.for_color("red")
+    geo = K.ArmGeometry.create_for_color("red")
     steps = T.pick_and_place_steps(geo.yard_center, (0.2, -0.05))
     ex, _ = run_perfect_plant(geo, steps, grasp_width=T.GRIP_CLOSE)   # fingers close fully: nothing held
     assert ex.failed and "grasp" in ex.message
 
 
 def test_unreachable_destination_rejected_before_moving():
-    geo = K.ArmGeometry.for_color("red")
+    geo = K.ArmGeometry.create_for_color("red")
     steps = T.pick_and_place_steps(geo.yard_center, (1.5, 1.5))
     assert "unreachable" in T.validate_steps(geo, steps, geo.home_q())

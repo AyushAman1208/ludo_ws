@@ -57,7 +57,7 @@ class RobotController(Node):
         self.time_scale = float(self.get_parameter("time_scale").value)
         rate = float(self.get_parameter("rate").value)
 
-        self.geo = K.ArmGeometry.for_color(self.color)
+        self.geo = K.ArmGeometry.create_for_color(self.color)
         self.exec = T.MotionExecutor(self.geo)
         self.measured = {}
         self.brick_xy = None

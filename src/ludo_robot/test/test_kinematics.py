@@ -4,7 +4,7 @@ import pytest
 
 from ludo_robot import kinematics as K
 
-ALL = [K.ArmGeometry.for_color(c) for c in K.COLORS]
+ALL = [K.ArmGeometry.create_for_color(c) for c in K.COLORS]
 
 
 def outer_track_cells():
@@ -48,6 +48,6 @@ def test_unreachable_target_rejected():
 
 
 def test_gaze_points_at_target():
-    geo = K.ArmGeometry.for_color("red")
+    geo = K.ArmGeometry.create_for_color("red")
     pan, tilt = geo.gaze(*geo.yard_center, K.BRICK_REST_Z)
     assert abs(pan) < 0.7 and 0.0 < tilt < 1.4

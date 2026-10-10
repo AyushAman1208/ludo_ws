@@ -79,7 +79,7 @@ class ArmGeometry:
     base_yaw: float          # world yaw of the robot's +x axis (faces the board centre)
 
     @classmethod
-    def for_color(cls, color: str) -> "ArmGeometry":
+    def create_for_color(cls, color: str) -> "ArmGeometry":
         return cls(color, *base_pose_for_color(color))
 
     # ---------------------------------------------------------------- frames
