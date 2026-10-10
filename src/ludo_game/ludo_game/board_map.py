@@ -1,7 +1,7 @@
 """Ludo board geometry: which world position belongs to which step of a piece's journey.
 
-Pure Python, no ROS. Must match ludo_sim/models/board.xml (15x15 grid, 0.05 m cells,
-grid (7, 7) is the board centre, x = (i - 7) * 0.05, y = (j - 7) * 0.05).
+Pure Python, no ROS. Shared board scale and player-corner geometry come from
+ludo_description.geometry; this module defines game-track topology only.
 
 Progress of a piece
     0        in the yard
@@ -10,8 +10,13 @@ Progress of a piece
     52..56   the five cells of its own home lane
     57       finished (placed in its triangle at the centre)
 """
-CELL = 0.05
-COLORS = ("red", "green", "yellow", "blue")
+from ludo_description.geometry import (
+    BASE_SIGN,
+    BOARD_CELL as CELL,
+    COLORS,
+    YARD_CENTER,
+)
+
 TURN_ORDER = ("red", "blue", "yellow", "green")      # counter-clockwise around the board
 FINISH = 57
 LOOP_LEN = 52
@@ -57,9 +62,28 @@ for _a, _b in zip(("red", "blue", "yellow"), ("blue", "yellow", "green")):
 # cells a piece cannot be captured on (and where it can't land if an opponent stands there)
 SAFE_IDX = set(START_IDX.values()) | {(i + 8) % LOOP_LEN for i in START_IDX.values()}
 
-_SIGN = {"red": (-1, -1), "green": (-1, 1), "yellow": (1, 1), "blue": (1, -1)}
-YARD_XY = {c: (sx * 0.225, sy * 0.225) for c, (sx, sy) in _SIGN.items()}
+YARD_XY = {
+    c: (sx * YARD_CENTER, sy * YARD_CENTER)
+    for c, (sx, sy) in BASE_SIGN.items()
+}
 FINISH_XY = {"red": (-0.045, 0.0), "green": (0.0, 0.045), "yellow": (0.045, 0.0), "blue": (0.0, -0.045)}
+
+__all__ = [
+    "CELL",
+    "COLORS",
+    "FINISH",
+    "FINISH_XY",
+    "LANE",
+    "LOOP",
+    "LOOP_LEN",
+    "SAFE_IDX",
+    "START_IDX",
+    "TURN_ORDER",
+    "YARD_XY",
+    "grid_xy",
+    "loop_index",
+    "position_xy",
+]
 
 
 def loop_index(color, progress):

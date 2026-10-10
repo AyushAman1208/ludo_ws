@@ -4,7 +4,7 @@ from launch.substitutions import LaunchConfiguration
 from launch_ros.actions import Node
 from launch_ros.parameter_descriptions import ParameterValue
 
-COLORS = ("red", "green", "yellow", "blue")
+from ludo_description.geometry import COLORS
 
 
 def generate_launch_description():

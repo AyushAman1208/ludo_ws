@@ -11,12 +11,35 @@ src/
 ```bash
 pip install mujoco                     # once; not available through rosdep
 cp -r src ~/ludo_ws/ && cd ~/ludo_ws
+PYTHONPATH=src/ludo_description python3 -m ludo_description.model_codegen --workspace-root .
 colcon build && source install/setup.bash
 ros2 launch ludo_game play.launch.py                        # whole game, with viewer
 ros2 launch ludo_game play.launch.py viewer:=false speed:=3 dice_seed:=42
 ```
 Headless camera rendering needs `export MUJOCO_GL=egl`; add `render_cameras:=true` to publish images.
 Keep `speed` <= 3: the controllers update at 50 Hz wall-clock, so very fast sims get coarse motion.
+
+## Robot geometry source of truth
+`src/ludo_description/ludo_description/geometry.py` is the canonical source for robot dimensions,
+mounting positions, joint limits, task heights, and shared yard/board-scale values. The generator
+updates robot XML, yard markers and starting-piece defaults in `src/ludo_sim/models/board.xml`, and
+the home keyframe in `src/ludo_sim/models/ludo.xml`. Do not hand-edit those generated values;
+regenerate after changing canonical model values:
+
+```bash
+PYTHONPATH=src/ludo_description python3 -m ludo_description.model_codegen --workspace-root .
+PYTHONPATH=src/ludo_description python3 -m ludo_description.model_codegen --workspace-root . --check
+colcon build --symlink-install
+source install/setup.bash
+```
+
+The check command is also covered by the `ludo_description` tests. Generated XML is checked in so
+the simulator can load it directly; rebuilding after generation refreshes installed model files.
+The kinematics solver and MuJoCo model generator use the same arm IK implementation for the ready
+pose, avoiding a separately maintained home-joint vector. The board's static track artwork remains
+hand-authored; the generator owns its yard markers and starting-piece defaults. After building the
+package, `ros2 run ludo_description generate_robot_models` is also available, but the source-module
+command above avoids accidentally running a previously installed copy of the geometry.
 
 ## How a turn works
 ```

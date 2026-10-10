@@ -23,23 +23,25 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import String
 from tf2_ros import StaticTransformBroadcaster, TransformBroadcaster
 
-from ludo_sim.sim_core import COLORS
+from ludo_description.geometry import (
+    BASE_SIGN,
+    COLORS,
+    LIFT_THRESHOLD_Z,
+    YARD_CENTER,
+    YARD_HALF_SIZE,
+    base_pose_for_color,
+)
 
 try:
     from rclpy.executors import ExternalShutdownException
 except ImportError:
     ExternalShutdownException = KeyboardInterrupt
 
-# Must match models/robots/*.xml and models/board.xml
-BASE_DIST = 0.46
-SIGN = {"red": (-1, -1), "green": (-1, 1), "yellow": (1, 1), "blue": (1, -1)}   # (sx, sy)
-YARD_MIN, YARD_MAX = 0.075, 0.375          # yard spans 0.075..0.375 m from centre on each axis
-LIFT_Z = 0.065                             # resting piece centre is at z = 0.054
-
 
 def in_yard(color, x, y):
-    sx, sy = SIGN[color]
-    return (YARD_MIN <= sx * x <= YARD_MAX) and (YARD_MIN <= sy * y <= YARD_MAX)
+    sx, sy = BASE_SIGN[color]
+    lo, hi = YARD_CENTER - YARD_HALF_SIZE, YARD_CENTER + YARD_HALF_SIZE
+    return (lo <= sx * x <= hi) and (lo <= sy * y <= hi)
 
 
 class StatePublisher(Node):
@@ -65,9 +67,7 @@ class StatePublisher(Node):
         stamp = self.get_clock().now().to_msg()
         msgs = []
         for c in COLORS:
-            sx, sy = SIGN[c]
-            x, y = sx * BASE_DIST, sy * BASE_DIST
-            yaw = math.atan2(-y, -x)                      # robot +x faces the board centre
+            x, y, yaw = base_pose_for_color(c)
             t = TransformStamped()
             t.header.stamp, t.header.frame_id, t.child_frame_id = stamp, "world", f"{c}_base"
             t.transform.translation.x, t.transform.translation.y = x, y
@@ -117,7 +117,7 @@ class StatePublisher(Node):
             pieces[c] = {
                 "x": round(x, 4), "y": round(y, 4), "z": round(z, 4),
                 "in_own_yard": in_yard(c, x, y),
-                "lifted": z > LIFT_Z,
+                "lifted": z > LIFT_THRESHOLD_Z,
             }
         self.state_pub.publish(String(data=json.dumps({"pieces": pieces})))
 

@@ -6,32 +6,33 @@
     <mesh name="tri_blue" vertex="0.0000 0.0000 0.0000 0.0750 -0.0750 0.0000 -0.0750 -0.0750 0.0000 0.0000 0.0000 0.0012 0.0750 -0.0750 0.0012 -0.0750 -0.0750 0.0012"/>
   </asset>
   <worldbody>
+    <!-- Yard markings and starting pieces are generated from ludo_description.geometry. -->
     <body name="board" pos="0 0 0">
       <geom name="board_slab" type="box" size="0.385 0.385 .01" pos="0 0 .01" rgba=".93 .88 .74 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.150 0.150 .0015" pos="-0.225 -0.225 .0215" rgba=".86 .12 .12 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 .0005" pos="-0.225 -0.225 .0235" rgba=".98 .98 .96 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.275 -0.275 .0245" rgba=".86 .12 .12 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.275 -0.175 .0245" rgba=".86 .12 .12 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.175 -0.275 .0245" rgba=".86 .12 .12 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.175 -0.175 .0245" rgba=".86 .12 .12 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.150 0.150 .0015" pos="-0.225 0.225 .0215" rgba=".10 .65 .22 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 .0005" pos="-0.225 0.225 .0235" rgba=".98 .98 .96 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.275 0.175 .0245" rgba=".10 .65 .22 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.275 0.275 .0245" rgba=".10 .65 .22 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.175 0.175 .0245" rgba=".10 .65 .22 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="-0.175 0.275 .0245" rgba=".10 .65 .22 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.150 0.150 .0015" pos="0.225 0.225 .0215" rgba=".96 .80 .10 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 .0005" pos="0.225 0.225 .0235" rgba=".98 .98 .96 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.175 0.175 .0245" rgba=".96 .80 .10 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.175 0.275 .0245" rgba=".96 .80 .10 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.275 0.175 .0245" rgba=".96 .80 .10 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.275 0.275 .0245" rgba=".96 .80 .10 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.150 0.150 .0015" pos="0.225 -0.225 .0215" rgba=".13 .32 .85 1"/>
-      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 .0005" pos="0.225 -0.225 .0235" rgba=".98 .98 .96 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.175 -0.275 .0245" rgba=".13 .32 .85 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.175 -0.175 .0245" rgba=".13 .32 .85 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.275 -0.275 .0245" rgba=".13 .32 .85 1"/>
-      <geom contype="0" conaffinity="0" type="cylinder" size="0.0180 .0005" pos="0.275 -0.175 .0245" rgba=".13 .32 .85 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.15 0.15 0.0015" pos="-0.225 -0.225 0.0215" rgba=".86 .12 .12 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 0.0005" pos="-0.225 -0.225 0.0235" rgba=".98 .98 .96 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.275 -0.275 0.0245" rgba=".86 .12 .12 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.275 -0.175 0.0245" rgba=".86 .12 .12 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.175 -0.275 0.0245" rgba=".86 .12 .12 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.175 -0.175 0.0245" rgba=".86 .12 .12 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.15 0.15 0.0015" pos="-0.225 0.225 0.0215" rgba=".10 .65 .22 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 0.0005" pos="-0.225 0.225 0.0235" rgba=".98 .98 .96 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.275 0.175 0.0245" rgba=".10 .65 .22 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.275 0.275 0.0245" rgba=".10 .65 .22 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.175 0.175 0.0245" rgba=".10 .65 .22 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="-0.175 0.275 0.0245" rgba=".10 .65 .22 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.15 0.15 0.0015" pos="0.225 0.225 0.0215" rgba=".96 .80 .10 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 0.0005" pos="0.225 0.225 0.0235" rgba=".98 .98 .96 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.175 0.175 0.0245" rgba=".96 .80 .10 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.175 0.275 0.0245" rgba=".96 .80 .10 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.275 0.175 0.0245" rgba=".96 .80 .10 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.275 0.275 0.0245" rgba=".96 .80 .10 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.15 0.15 0.0015" pos="0.225 -0.225 0.0215" rgba=".13 .32 .85 1"/>
+      <geom contype="0" conaffinity="0" type="box" size="0.1125 0.1125 0.0005" pos="0.225 -0.225 0.0235" rgba=".98 .98 .96 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.175 -0.275 0.0245" rgba=".13 .32 .85 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.175 -0.175 0.0245" rgba=".13 .32 .85 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.275 -0.275 0.0245" rgba=".13 .32 .85 1"/>
+      <geom contype="0" conaffinity="0" type="cylinder" size="0.018 0.0005" pos="0.275 -0.175 0.0245" rgba=".13 .32 .85 1"/>
       <geom contype="0" conaffinity="0" type="box" size="0.023 0.023 .0005" pos="-0.350 -0.050 .0205" rgba=".98 .98 .96 1"/>
       <geom contype="0" conaffinity="0" type="box" size="0.023 0.023 .0005" pos="-0.350 0.000 .0205" rgba=".98 .98 .96 1"/>
       <geom contype="0" conaffinity="0" type="box" size="0.023 0.023 .0005" pos="-0.350 0.050 .0205" rgba=".98 .98 .96 1"/>
@@ -110,27 +111,27 @@
       <geom contype="0" conaffinity="0" type="mesh" mesh="tri_blue" pos="0 0 .0205" rgba=".13 .32 .85 1"/>
       <geom name="board_surface" group="3" type="box" size="0.385 0.385 .0005" pos="0 0 .0235" rgba="0 0 0 0"/>
     </body>
-    <body name="red_brick" pos="-0.2250 -0.2250 0.0545" euler="0 0 45.00">
+    <body name="red_brick" pos="-0.225 -0.225 0.0545" euler="0 0 45">
       <freejoint name="red_brick_joint"/>
-      <geom name="red_brick_body" type="box" size="0.025 0.02 0.03" mass=".08" friction="1.2 .01 .001" contype="1" conaffinity="3" rgba=".86 .12 .12 1"/>
+      <geom name="red_brick_body" type="box" size="0.025 0.02 0.03" mass="0.08" friction="1.2 0.01 0.001" contype="1" conaffinity="3" rgba="0.86 0.12 0.12 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="-0.0125 0 0.0335" rgba=".86 .12 .12 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="0.0125 0 0.0335" rgba=".86 .12 .12 1"/>
     </body>
-    <body name="green_brick" pos="-0.2250 0.2250 0.0545" euler="0 0 -45.00">
+    <body name="green_brick" pos="-0.225 0.225 0.0545" euler="0 0 -45">
       <freejoint name="green_brick_joint"/>
-      <geom name="green_brick_body" type="box" size="0.025 0.02 0.03" mass=".08" friction="1.2 .01 .001" contype="1" conaffinity="3" rgba=".10 .65 .22 1"/>
+      <geom name="green_brick_body" type="box" size="0.025 0.02 0.03" mass="0.08" friction="1.2 0.01 0.001" contype="1" conaffinity="3" rgba="0.1 0.65 0.22 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="-0.0125 0 0.0335" rgba=".10 .65 .22 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="0.0125 0 0.0335" rgba=".10 .65 .22 1"/>
     </body>
-    <body name="yellow_brick" pos="0.2250 0.2250 0.0545" euler="0 0 -135.00">
+    <body name="yellow_brick" pos="0.225 0.225 0.0545" euler="0 0 -135">
       <freejoint name="yellow_brick_joint"/>
-      <geom name="yellow_brick_body" type="box" size="0.025 0.02 0.03" mass=".08" friction="1.2 .01 .001" contype="1" conaffinity="3" rgba=".96 .80 .10 1"/>
+      <geom name="yellow_brick_body" type="box" size="0.025 0.02 0.03" mass="0.08" friction="1.2 0.01 0.001" contype="1" conaffinity="3" rgba="0.96 0.8 0.1 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="-0.0125 0 0.0335" rgba=".96 .80 .10 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="0.0125 0 0.0335" rgba=".96 .80 .10 1"/>
     </body>
-    <body name="blue_brick" pos="0.2250 -0.2250 0.0545" euler="0 0 135.00">
+    <body name="blue_brick" pos="0.225 -0.225 0.0545" euler="0 0 135">
       <freejoint name="blue_brick_joint"/>
-      <geom name="blue_brick_body" type="box" size="0.025 0.02 0.03" mass=".08" friction="1.2 .01 .001" contype="1" conaffinity="3" rgba=".13 .32 .85 1"/>
+      <geom name="blue_brick_body" type="box" size="0.025 0.02 0.03" mass="0.08" friction="1.2 0.01 0.001" contype="1" conaffinity="3" rgba="0.13 0.32 0.85 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="-0.0125 0 0.0335" rgba=".13 .32 .85 1"/>
       <geom contype="0" conaffinity="0" type="cylinder" size=".009 .0035" pos="0.0125 0 0.0335" rgba=".13 .32 .85 1"/>
     </body>

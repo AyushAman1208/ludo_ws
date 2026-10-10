@@ -7,8 +7,7 @@ import os
 
 import mujoco
 import numpy as np
-
-COLORS = ("red", "green", "yellow", "blue")
+from ludo_description.geometry import COLORS
 
 # Command name (as used in JointState commands) -> actuator suffix(es).
 # Actuator names in the model are "<color>_a_<suffix>".
