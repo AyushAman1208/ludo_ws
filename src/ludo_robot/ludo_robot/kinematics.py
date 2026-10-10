@@ -22,6 +22,10 @@ COLORS = ("red", "green", "yellow", "blue")
 BASE_DIST = 0.46                                     # robot base is at (+-0.46, +-0.46)
 BASE_SIGN = {"red": (-1, -1), "green": (-1, 1), "yellow": (1, 1), "blue": (1, -1)}
 YARD_CENTER = 0.225                                  # yard centre is at (+-0.225, +-0.225)
+'''Yard center is the location above which the gripper of a robot arm rests.
+In this simulation, each home box's center is the location where the yard location has been defined.
+This way, one arm dosen't become an obstacle in other's trajectories, leaving the rest of the board
+ available obstacle-free for the one whose turn it is'''
 
 # ---- arm ---------------------------------------------------------------------
 SHOULDER_Z = 0.20            # shoulder axis height above the floor
