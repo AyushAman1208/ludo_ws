@@ -37,6 +37,8 @@ game_manager: waits for task_status "done", checks /<color>/brick_pose is within
 | `/ludo/game_state` | String (JSON) | phase, turn, last roll, progress, winner |
 | `/ludo/state` | String (JSON) | physical truth: where each piece is |
 
+The latest dice roll is also shown in the top-right corner of the MuJoCo viewer.
+
 Services: `/ludo/start`, `/ludo/new_game` (Trigger), `/mujoco/reset` (Empty).
 
 ## Rules (one piece per player)

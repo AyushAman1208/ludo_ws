@@ -25,10 +25,12 @@ Parameters
 import contextlib
 import time
 
+import mujoco
 import rclpy
 from geometry_msgs.msg import Pose, PoseArray
 from rclpy.node import Node
 from sensor_msgs.msg import Image, JointState
+from std_msgs.msg import Int32
 from std_srvs.srv import Empty
 
 from ludo_sim.sim_core import COLORS, LudoSim
@@ -57,6 +59,8 @@ class MujocoNode(Node):
         # --- ROS interfaces -------------------------------------------------
         self.joint_pub = self.create_publisher(JointState, "/mujoco/joint_states", 10)
         self.brick_pub = self.create_publisher(PoseArray, "/mujoco/brick_poses", 10)
+        self.last_dice_roll = None
+        self.create_subscription(Int32, "/ludo/dice", self._on_dice_roll, 10)
         for c in COLORS:
             self.create_subscription(
                 JointState, f"/{c}/joint_command",
@@ -114,6 +118,9 @@ class MujocoNode(Node):
         self.get_logger().info("simulation reset")
         return response
 
+    def _on_dice_roll(self, msg):
+        self.last_dice_roll = msg.data
+
     def _tick(self):
         if self.viewer is not None and not self.viewer.is_running():
             self.get_logger().info("viewer closed, shutting down")
@@ -127,6 +134,9 @@ class MujocoNode(Node):
         with self._lock():
             self.sim.step_to(target)
         if self.viewer is not None:
+            roll = self.last_dice_roll if self.last_dice_roll is not None else "-"
+            self.viewer.set_texts(
+                (None, mujoco.mjtGridPos.mjGRID_TOPRIGHT, "Ludo dice", f"[ {roll} ]"))
             self.viewer.sync()
 
     def _publish_state(self):
