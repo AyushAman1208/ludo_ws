@@ -19,9 +19,15 @@ ros2 launch ludo_game play.launch.py                        # environment + dice
 ros2 launch ludo_game play.launch.py viewer:=false speed:=3 dice_seed:=42
 ```
 Headless camera rendering needs `export MUJOCO_GL=egl`; add `render_cameras:=true` to publish images.
-The dice publisher emits a random value from 1 to 6 at 0.2 Hz by default. Set `dice_rate` to change
-the publication rate, or `dice_seed` to make the sequence reproducible. The player package does not
-yet subscribe to dice/state topics or send manipulation commands.
+The dice publisher emits one random value from 1 to 6 for each `std_msgs/Empty` message it receives
+on `/ludo/roll_request`. It publishes the result on `/ludo/dice`. To request one roll manually:
+
+```bash
+ros2 topic pub --once /ludo/roll_request std_msgs/msg/Empty '{}'
+```
+
+Set `dice_seed` to make the sequence reproducible. The player package does not yet subscribe to
+dice/state topics or send manipulation commands.
 
 ## Robot geometry source of truth
 `src/ludo_description/ludo_description/geometry.py` is the canonical source for robot dimensions,
@@ -53,7 +59,8 @@ command above avoids accidentally running a previously installed copy of the geo
 | `/<color>/joint_states`, `/<color>/brick_pose` | JointState, PoseStamped | simulator -> everyone |
 | `/<color>/head_cam/image_raw`, `/<color>/hand_cam/image_raw` | Image | simulator -> everyone (if camera rendering is enabled) |
 | `/ludo/state` | String (JSON) | simulator state publisher -> everyone; physical piece positions |
-| `/ludo/dice` | Int32 | dice publisher -> everyone |
+| `/ludo/roll_request` | Empty | request one dice roll |
+| `/ludo/dice` | Int32 | dice publisher -> everyone; one result per request |
 | `/<color>/joint_command` | JointState | player -> simulator; position targets (yaw, shoulder, elbow, wrist, grip, head_pan, head_tilt) |
 
 The simulator publishes environment state and accepts low-level joint commands, but does not decide

@@ -28,11 +28,8 @@ def generate_launch_description():
         DeclareLaunchArgument("speed", default_value="1.0",
                               description="simulation speed relative to wall-clock time"),
         DeclareLaunchArgument("dice_seed", default_value="-1"),
-        DeclareLaunchArgument("dice_rate", default_value="0.2",
-                              description="dice messages per second"),
         _include("ludo_sim", "ludo_sim.launch.py",
                  {"viewer": viewer, "render_cameras": cameras, "realtime_factor": speed}),
         _include("ludo_game", "game.launch.py",
-                 {"dice_seed": LaunchConfiguration("dice_seed"),
-                  "dice_rate": LaunchConfiguration("dice_rate")}),
+                 {"dice_seed": LaunchConfiguration("dice_seed")}),
     ])
