@@ -18,11 +18,11 @@ setup(
     zip_safe=True,
     maintainer="Your Name",
     maintainer_email="you@example.com",
-    description="Rules and orchestration of a Ludo game played by four robot arms.",
+    description="Publishes dice rolls for player nodes in the Ludo environment.",
     license="Apache-2.0",
     entry_points={
         "console_scripts": [
-            "game_manager = ludo_game.game_manager:main",
+            "dice_publisher = ludo_game.dice_publisher:main",
         ],
     },
 )

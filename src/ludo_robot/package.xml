@@ -3,19 +3,11 @@
 <package format="3">
   <name>ludo_robot</name>
   <version>0.1.0</version>
-  <description>Kinematics and pick-and-place motion for the Ludo robot arms (one controller per colour).</description>
+  <description>Kinematics and motion-planning library for the Ludo robot arms.</description>
   <maintainer email="you@example.com">Your Name</maintainer>
   <license>Apache-2.0</license>
 
-  <exec_depend>rclpy</exec_depend>
-  <exec_depend>std_msgs</exec_depend>
-  <exec_depend>sensor_msgs</exec_depend>
-  <exec_depend>geometry_msgs</exec_depend>
-  <exec_depend>launch</exec_depend>
-  <exec_depend>launch_ros</exec_depend>
   <exec_depend>ludo_description</exec_depend>
-  <!-- runtime peer: provides the simulated arms this package drives -->
-  <exec_depend>ludo_sim</exec_depend>
 
   <test_depend>python3-pytest</test_depend>
 

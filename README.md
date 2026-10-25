@@ -1,10 +1,12 @@
-# Ludo with four robot arms (ROS 2 + MuJoCo)
+# Ludo environment with four robot arms (ROS 2 + MuJoCo)
 
 ```
 src/
-├── ludo_sim/    MuJoCo world: board, 4 arms with head/hand cameras, 4 bricks. Publishes state, takes joint commands.
-├── ludo_robot/  Kinematics + pick-and-place for ONE arm (run one controller per colour).
-└── ludo_game/   Rules + turn orchestration. Rolls the die, tells robots what to move, verifies the result.
+├── ludo_description/  Canonical geometry for the board and robot arms.
+├── ludo_sim/          MuJoCo world; publishes robot, camera, and piece state.
+├── ludo_robot/        Kinematics and motion-planning library.
+├── ludo_game/         Random dice-roll publisher.
+└── player/            Reserved for player logic; reads state/dice and issues manipulation commands.
 ```
 
 ## Install & run
@@ -13,11 +15,13 @@ pip install mujoco                     # once; not available through rosdep
 cp -r src ~/ludo_ws/ && cd ~/ludo_ws
 PYTHONPATH=src/ludo_description python3 -m ludo_description.model_codegen --workspace-root .
 colcon build && source install/setup.bash
-ros2 launch ludo_game play.launch.py                        # whole game, with viewer
+ros2 launch ludo_game play.launch.py                        # environment + dice publisher
 ros2 launch ludo_game play.launch.py viewer:=false speed:=3 dice_seed:=42
 ```
 Headless camera rendering needs `export MUJOCO_GL=egl`; add `render_cameras:=true` to publish images.
-Keep `speed` <= 3: the controllers update at 50 Hz wall-clock, so very fast sims get coarse motion.
+The dice publisher emits a random value from 1 to 6 at 0.2 Hz by default. Set `dice_rate` to change
+the publication rate, or `dice_seed` to make the sequence reproducible. The player package does not
+yet subscribe to dice/state topics or send manipulation commands.
 
 ## Robot geometry source of truth
 `src/ludo_description/ludo_description/geometry.py` is the canonical source for robot dimensions,
@@ -41,28 +45,21 @@ hand-authored; the generator owns its yard markers and starting-piece defaults. 
 package, `ros2 run ludo_description generate_robot_models` is also available, but the source-module
 command above avoids accidentally running a previously installed copy of the geometry.
 
-## How a turn works
-```
-game_manager --roll--> rules.Game.propose()  --(capture?)-->  /<victim>/task   move_piece -> own yard
-                                             -->  /<mover>/task    move_piece -> new cell
-robot_controller:  IK -> pick (hover, descend, grip, lift) -> carry -> place -> release -> back to ready pose
-game_manager: waits for task_status "done", checks /<color>/brick_pose is within 3 cm of the cell, then next player
-```
-
 ## Topics
 | Topic | Type | Who |
 |---|---|---|
-| `/<color>/task` | String (JSON) | game -> robot. `{"id":1,"type":"move_piece","to":[x,y]}` (optional `"from"`), `{"type":"park"}`, `{"type":"look_at","at":[x,y]}` |
-| `/<color>/task_status` | String (JSON) | robot -> game: accepted / running / done / failed |
-| `/<color>/joint_command` | JointState | robot -> sim (yaw, shoulder, elbow, wrist, grip, head_pan, head_tilt) |
-| `/<color>/joint_states`, `/<color>/brick_pose` | JointState, PoseStamped | sim -> everyone |
-| `/ludo/dice` | Int32 | every roll |
-| `/ludo/game_state` | String (JSON) | phase, turn, last roll, progress, winner |
-| `/ludo/state` | String (JSON) | physical truth: where each piece is |
+| `/mujoco/joint_states` | JointState | simulator -> everyone |
+| `/mujoco/brick_poses` | PoseArray | simulator -> everyone |
+| `/<color>/joint_states`, `/<color>/brick_pose` | JointState, PoseStamped | simulator -> everyone |
+| `/<color>/head_cam/image_raw`, `/<color>/hand_cam/image_raw` | Image | simulator -> everyone (if camera rendering is enabled) |
+| `/ludo/state` | String (JSON) | simulator state publisher -> everyone; physical piece positions |
+| `/ludo/dice` | Int32 | dice publisher -> everyone |
+| `/<color>/joint_command` | JointState | player -> simulator; position targets (yaw, shoulder, elbow, wrist, grip, head_pan, head_tilt) |
 
-The latest dice roll is also shown in the top-right corner of the MuJoCo viewer.
-
-Services: `/ludo/start`, `/ludo/new_game` (Trigger), `/mujoco/reset` (Empty).
+The simulator publishes environment state and accepts low-level joint commands, but does not decide
+game turns or plan manipulation. The player package will consume the state/dice topics and publish
+joint commands when that behavior is implemented. The simulator also provides `/mujoco/reset`
+(`std_srvs/Empty`).
 
 ## Rules (one piece per player)
 6 to leave the yard · 51 cells round the loop + 5-cell home lane · exact roll to finish · landing on an

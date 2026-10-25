@@ -1,4 +1,4 @@
-"""Everything: simulator + four robot controllers + game manager.
+"""Start the simulator and dice publisher.
 
     ros2 launch ludo_game play.launch.py
     ros2 launch ludo_game play.launch.py viewer:=false speed:=3.0 dice_seed:=42
@@ -26,13 +26,13 @@ def generate_launch_description():
         DeclareLaunchArgument("render_cameras", default_value="false",
                               description="publish robot camera images (costs CPU)"),
         DeclareLaunchArgument("speed", default_value="1.0",
-                              description="simulation speed (keep <= 3 for smooth arm motion)"),
+                              description="simulation speed relative to wall-clock time"),
         DeclareLaunchArgument("dice_seed", default_value="-1"),
-        DeclareLaunchArgument("auto_start", default_value="true"),
+        DeclareLaunchArgument("dice_rate", default_value="0.2",
+                              description="dice messages per second"),
         _include("ludo_sim", "ludo_sim.launch.py",
                  {"viewer": viewer, "render_cameras": cameras, "realtime_factor": speed}),
-        _include("ludo_robot", "robots.launch.py", {"speed": speed}),
         _include("ludo_game", "game.launch.py",
                  {"dice_seed": LaunchConfiguration("dice_seed"),
-                  "auto_start": LaunchConfiguration("auto_start")}),
+                  "dice_rate": LaunchConfiguration("dice_rate")}),
     ])
